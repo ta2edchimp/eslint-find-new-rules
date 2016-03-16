@@ -6,9 +6,10 @@
 // preset. It helps with upgrading the preset when new ESLint gets released.
 var path = require('path')
 var isAbsolute = require('path-is-absolute')
+var union = require('lodash.union')
 var findNewRules = require('./index')
 
-var currentRules = Object.keys(getConfig().rules)
+var currentRules = getRules()
 var newRules = findNewRules(currentRules)
 
 if (newRules.length) {
@@ -16,9 +17,11 @@ if (newRules.length) {
   process.exit(1)
 }
 
-function getConfig() {
+function getConfig(extendingConfigFile) {
   var specifiedFile = process.argv[2]
-  if (specifiedFile) {
+  if (extendingConfigFile) {
+    return require(extendingConfigFile)
+  } else if (specifiedFile) {
     // this is being called like: eslint-find-new-rules eslint-config-mgol
     if (isAbsolute(specifiedFile)) {
       return require(specifiedFile)
@@ -31,3 +34,12 @@ function getConfig() {
   }
 }
 
+function getRules(set) {
+  var configFileName = set ? ('eslint-config-' + set) : null
+  var config = getConfig(configFileName)
+  var rules = Object.keys(config.rules)
+  if (config.extends) {
+    rules = union(rules, getRules(config.extends))
+  }
+  return rules
+}
