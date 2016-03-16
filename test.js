@@ -33,3 +33,7 @@ test('returns an empty array if there is no difference', t => {
   t.same(missingRules.length, 0)
 })
 
+test('provokes a memory leak warning', t => {
+  const rules = [1, 2]
+  t.same(rules, [1, 2, 3])
+})
