@@ -2,11 +2,11 @@ import mock from 'mock-fs'
 import test from 'ava'
 import findNewRules from './index'
 
-try {
-  require('./bin') // requiring now for coverage until this is tested
-} catch (error) {
-  // ignore the inevitable error
-}
+// try {
+//   require('./bin') // requiring now for coverage until this is tested
+// } catch (error) {
+//   // ignore the inevitable error
+// }
 
 test.before(() => {
   mock({
