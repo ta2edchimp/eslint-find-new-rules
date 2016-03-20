@@ -11,7 +11,6 @@ const specifiedFile = './fixtures/.eslintrc.js'
 const mainFile = path.join(process.cwd(), specifiedFile)
 const extendingFile = './fixtures/extending-config.json'
 const indexStub = {
-  './index': () => rules,
   'eslint-plugin-react': {
     rules: {
       'jsx-uses-react': true,
@@ -21,8 +20,13 @@ const indexStub = {
     '@noCallThru': true,
     '@global': true,
   },
+  fs: {
+    readdirSync: () => ['foo-rule.js', 'bar-rule.js', 'baz-thing.js', 'something-new.js'],
+    '@global': true,
+  },
 }
 function outputStatement() {
+  console.info(`New rules to add to the config: ${rules.join(', ')}.`)
   return `New rules to add to the config: ${rules.join(', ')}.`
 }
 

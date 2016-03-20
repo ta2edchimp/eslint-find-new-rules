@@ -55,6 +55,7 @@ function getConfig(file) {
 
 function getCurrentRules(conf) {
   var rules = Object.keys(conf.rules)
+  console.info('current rules .: ' + rules.join(', '))
   return rules
 }
 
@@ -70,5 +71,6 @@ function getPluginRules(conf) {
       }
     })
   }
+  console.info('plugin rules ..: ' + rules.join(', '))
   return rules
 }

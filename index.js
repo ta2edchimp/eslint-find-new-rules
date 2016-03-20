@@ -13,7 +13,6 @@ function findNewRules(currentRules, pluginRules) {
   if (pluginRules) {
     allRules = allRules.concat(pluginRules)
   }
-
+  console.info('findNewRules: ' + difference(allRules, currentRules).join(', '))
   return difference(allRules, currentRules)
 }
-
